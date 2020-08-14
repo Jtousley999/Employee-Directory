@@ -6,6 +6,7 @@ function Searchbar(props) {
       <form className="form-inline">
         <input
           className="form-control mr-sm-2"
+          onChange={props.search}
           id="searchStyle"
           type="search"
           placeholder="Search"

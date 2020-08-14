@@ -5,6 +5,7 @@ import Result from "./result";
 import Table from "./table";
 import Header from "./header";
 import Body from "./body";
+import Container from "./container";
 import axios from "axios";
 
 class Employee extends Component {
@@ -29,26 +30,36 @@ class Employee extends Component {
       .catch((err) => alert(err));
   }
 
+  handleInput = (event) => {
+    let value = event.target.value.toLowerCase().trim();
+    const newArr = this.state.store.filter((result) => {
+      return result.name.toLowerCase().trim().includes(value);
+    });
+    this.setState({ store: newArr });
+  };
+
   render() {
     return (
       <div>
-        <Jumbotron />
-        <Searchbar />
-        <Table>
-          <Header />
-          <Body>
-            {this.state.store.map((data) => (
-              <Result
-                id={data.id}
-                image={data.image}
-                name={data.name}
-                phone={data.phone}
-                email={data.email}
-                birthday={data.birthday}
-              />
-            ))}
-          </Body>
-        </Table>
+        <Container>
+          <Jumbotron />
+          <Searchbar search={this.handleInput} />
+          <Table>
+            <Header />
+            <Body>
+              {this.state.store.map((data) => (
+                <Result
+                  id={data.id}
+                  image={data.image}
+                  name={data.name}
+                  phone={data.phone}
+                  email={data.email}
+                  birthday={data.birthday.substring(0, 10)}
+                />
+              ))}
+            </Body>
+          </Table>
+        </Container>
       </div>
     );
   }
